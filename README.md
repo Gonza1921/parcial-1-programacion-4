@@ -77,3 +77,5 @@ App disponible en: `http://localhost:5173`
 - `POST /ingredientes`
 - `PUT /ingredientes/{id}`
 - `DELETE /ingredientes/{id}`
+
+LINK DE VIDEO: https://www.youtube.com/watch?v=bQGakAOXozs
