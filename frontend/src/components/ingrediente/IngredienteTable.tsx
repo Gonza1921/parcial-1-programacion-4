@@ -16,25 +16,24 @@ export const IngredienteTable: React.FC<IngredienteTableProps> = ({
   isDeleting = false,
 }) => {
   return (
-    <div className='overflow-x-auto'>
-      <table className='w-full border-collapse'>
-        <thead>
-          <tr className='bg-green-700 text-white border-b-2 border-green-700'>
-            <th className='px-6 py-4 text-left text-sm font-bold uppercase'>ID</th>
-            <th className='px-6 py-4 text-left text-sm font-bold uppercase'>Nombre</th>
-            <th className='px-6 py-4 text-right text-sm font-bold uppercase'>Acciones</th>
+    <div className='bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden'>
+      <table className='w-full'>
+        <thead className='bg-gray-50 border-b border-gray-100'>
+          <tr>
+            <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wide'>ID</th>
+            <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wide'>Nombre</th>
+            <th className='px-6 py-3 text-right text-xs font-medium text-gray-600 uppercase tracking-wide'>Acciones</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='divide-y divide-gray-100'>
           {ingredientes.map((ingrediente) => (
-            <tr key={ingrediente.id} className='border-b border-gray-300 hover:bg-green-50'>
-              <td className='px-6 py-3 text-sm'>{ingrediente.id}</td>
-              <td className='px-6 py-3 text-sm font-bold uppercase'>{ingrediente.nombre}</td>
-              <td className='px-6 py-3 text-right space-x-2'>
+            <tr key={ingrediente.id} className='hover:bg-orange-50 transition-colors'>
+              <td className='px-6 py-4 text-sm text-gray-900'>{ingrediente.id}</td>
+              <td className='px-6 py-4 text-sm font-medium text-gray-900'>{ingrediente.nombre}</td>
+              <td className='px-6 py-4 text-right space-x-2'>
                 <Button
                   variant='secondary'
                   onClick={() => onEdit(ingrediente)}
-                  className='text-xs'
                 >
                   Editar
                 </Button>
@@ -42,7 +41,6 @@ export const IngredienteTable: React.FC<IngredienteTableProps> = ({
                   variant='danger'
                   onClick={() => onDelete(ingrediente.id)}
                   isLoading={isDeleting}
-                  className='text-xs'
                 >
                   Eliminar
                 </Button>
@@ -53,8 +51,8 @@ export const IngredienteTable: React.FC<IngredienteTableProps> = ({
       </table>
 
       {ingredientes.length === 0 && (
-        <div className='text-center py-8 text-gray-500 font-bold'>
-          NO HAY INGREDIENTES DISPONIBLES
+        <div className='text-center py-12 text-gray-500'>
+          <p className='text-sm font-medium'>No hay ingredientes disponibles</p>
         </div>
       )}
     </div>

@@ -16,29 +16,28 @@ export const CategoriaTable: React.FC<CategoriaTableProps> = ({
   isDeleting = false,
 }) => {
   return (
-    <div className='overflow-x-auto'>
-      <table className='w-full border-collapse'>
-        <thead>
-          <tr className='bg-black text-white border-b-2 border-black'>
-            <th className='px-6 py-4 text-left text-sm font-bold uppercase'>ID</th>
-            <th className='px-6 py-4 text-left text-sm font-bold uppercase'>Nombre</th>
-            <th className='px-6 py-4 text-left text-sm font-bold uppercase'>Descripción</th>
-            <th className='px-6 py-4 text-right text-sm font-bold uppercase'>Acciones</th>
+    <div className='bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden'>
+      <table className='w-full'>
+        <thead className='bg-gray-50 border-b border-gray-100'>
+          <tr>
+            <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wide'>ID</th>
+            <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wide'>Nombre</th>
+            <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wide'>Descripción</th>
+            <th className='px-6 py-3 text-right text-xs font-medium text-gray-600 uppercase tracking-wide'>Acciones</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='divide-y divide-gray-100'>
           {categorias.map((categoria) => (
-            <tr key={categoria.id} className='border-b border-gray-300 hover:bg-gray-100'>
-              <td className='px-6 py-3 text-sm'>{categoria.id}</td>
-              <td className='px-6 py-3 text-sm font-bold uppercase'>{categoria.nombre}</td>
-              <td className='px-6 py-3 text-sm text-gray-600'>
+            <tr key={categoria.id} className='hover:bg-orange-50 transition-colors'>
+              <td className='px-6 py-4 text-sm text-gray-900'>{categoria.id}</td>
+              <td className='px-6 py-4 text-sm font-medium text-gray-900'>{categoria.nombre}</td>
+              <td className='px-6 py-4 text-sm text-gray-600'>
                 {categoria.descripcion || '-'}
               </td>
-              <td className='px-6 py-3 text-right space-x-2'>
+              <td className='px-6 py-4 text-right space-x-2'>
                 <Button
                   variant='secondary'
                   onClick={() => onEdit(categoria)}
-                  className='text-xs'
                 >
                   Editar
                 </Button>
@@ -46,7 +45,6 @@ export const CategoriaTable: React.FC<CategoriaTableProps> = ({
                   variant='danger'
                   onClick={() => onDelete(categoria.id)}
                   isLoading={isDeleting}
-                  className='text-xs'
                 >
                   Eliminar
                 </Button>
@@ -57,8 +55,8 @@ export const CategoriaTable: React.FC<CategoriaTableProps> = ({
       </table>
 
       {categorias.length === 0 && (
-        <div className='text-center py-8 text-gray-500 font-bold'>
-          NO HAY CATEGORÍAS DISPONIBLES
+        <div className='text-center py-12 text-gray-500'>
+          <p className='text-sm font-medium'>No hay categorías disponibles</p>
         </div>
       )}
     </div>

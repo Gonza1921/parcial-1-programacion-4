@@ -11,18 +11,18 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }
   if (!isOpen) return null
 
   return (
-    <div className='fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50'>
-      <div className='bg-white border-2 border-black shadow-2xl w-full max-w-md p-6'>
-        <div className='flex justify-between items-center mb-4 pb-4 border-b-2 border-black'>
-          <h2 className='text-2xl font-bold uppercase text-black'>{title}</h2>
+    <div className='fixed inset-0 bg-black/50 flex items-center justify-center z-50'>
+      <div className='bg-white rounded-xl shadow-xl w-full max-w-md'>
+        <div className='flex justify-between items-center p-6 border-b border-gray-100'>
+          <h2 className='text-lg font-bold text-gray-900'>{title}</h2>
           <button
             onClick={onClose}
-            className='text-black hover:text-red-600 text-3xl leading-none font-bold transition-colors'
+            className='text-gray-400 hover:text-gray-600 text-2xl leading-none transition-colors'
           >
-            ×
+            ✕
           </button>
         </div>
-        <div>{children}</div>
+        <div className='p-6'>{children}</div>
       </div>
     </div>
   )

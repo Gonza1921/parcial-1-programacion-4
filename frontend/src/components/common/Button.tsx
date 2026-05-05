@@ -13,11 +13,11 @@ export const Button: React.FC<ButtonProps> = ({
   className,
   ...props
 }) => {
-  const baseClass = 'px-4 py-2 font-bold uppercase text-sm tracking-wide transition-all border-2'
+  const baseClass = 'rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed'
   const variantClass = {
-    primary: 'bg-black text-yellow-400 border-yellow-400 hover:bg-yellow-400 hover:text-black disabled:bg-gray-600 disabled:text-gray-400 disabled:border-gray-400',
-    secondary: 'bg-white text-black border-black hover:bg-black hover:text-yellow-400 disabled:bg-gray-300 disabled:text-gray-500 disabled:border-gray-400',
-    danger: 'bg-red-600 text-white border-red-600 hover:bg-red-700 hover:border-red-700 disabled:bg-gray-600 disabled:text-gray-400 disabled:border-gray-400',
+    primary: 'bg-orange-500 hover:bg-orange-600 text-white px-4 py-2',
+    secondary: 'bg-blue-50 text-blue-600 hover:bg-blue-100 px-3 py-1.5 text-sm',
+    danger: 'bg-red-50 text-red-600 hover:bg-red-100 px-3 py-1.5 text-sm',
   }[variant]
 
   return (
@@ -26,7 +26,7 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled || isLoading}
       className={`${baseClass} ${variantClass} ${className || ''}`}
     >
-      {isLoading ? 'CARGANDO...' : children}
+      {isLoading ? 'Cargando...' : children}
     </button>
   )
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button } from '../common'
+import { Button, Alert } from '../common'
 import type { Categoria, CreateCategoriaPayload, UpdateCategoriaPayload } from '../../types'
 
 interface CategoriaFormProps {
@@ -36,25 +36,25 @@ export const CategoriaForm: React.FC<CategoriaFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit} className='space-y-4'>
-      {error && <div className='text-red-600 text-sm font-bold'>{error}</div>}
+      {error && <Alert type='error' message={error} />}
 
       <div>
-        <label className='block text-sm font-bold uppercase text-black mb-2'>Nombre</label>
+        <label className='block text-sm font-medium text-gray-700 mb-1'>Nombre</label>
         <input
           type='text'
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
-          className='w-full px-4 py-2 border-2 border-black focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-200 uppercase font-bold'
+          className='w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 text-gray-900'
           placeholder='Nombre de la categoría'
         />
       </div>
 
       <div>
-        <label className='block text-sm font-bold uppercase text-black mb-2'>Descripción</label>
+        <label className='block text-sm font-medium text-gray-700 mb-1'>Descripción</label>
         <textarea
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
-          className='w-full px-4 py-2 border-2 border-black focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-200 font-bold'
+          className='w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 text-gray-900'
           placeholder='Descripción de la categoría'
           rows={3}
         />

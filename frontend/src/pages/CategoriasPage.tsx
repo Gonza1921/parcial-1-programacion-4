@@ -67,8 +67,11 @@ export const CategoriasPage: React.FC = () => {
   return (
     <div className='space-y-6'>
       <div className='flex justify-between items-center'>
-        <h1 className='text-3xl font-bold uppercase'>CATEGORÍAS</h1>
-        <Button onClick={() => handleOpenModal()}>+ NUEVA CATEGORÍA</Button>
+        <div>
+          <h1 className='text-2xl font-bold text-gray-900'>Categorías</h1>
+          <p className='text-sm text-gray-500 mt-1'>Gestiona las categorías de tus productos</p>
+        </div>
+        <Button onClick={() => handleOpenModal()}>+ Nueva categoría</Button>
       </div>
 
       {successMessage && <Alert type='success' message={successMessage} />}
@@ -78,14 +81,12 @@ export const CategoriasPage: React.FC = () => {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <div className='bg-white border-2 border-black shadow-lg p-6'>
-          <CategoriaTable
-            categorias={categorias}
-            onEdit={handleOpenModal}
-            onDelete={handleDelete}
-            isDeleting={deleteMutation.isPending}
-          />
-        </div>
+        <CategoriaTable
+          categorias={categorias}
+          onEdit={handleOpenModal}
+          onDelete={handleDelete}
+          isDeleting={deleteMutation.isPending}
+        />
       )}
 
       <CategoriaModal

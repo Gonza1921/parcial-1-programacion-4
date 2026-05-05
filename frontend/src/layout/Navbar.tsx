@@ -7,42 +7,42 @@ export const Navbar: React.FC = () => {
   const isActive = (path: string) => location.pathname === path || (path === '/' && location.pathname === '/categorias')
 
   return (
-    <nav className='bg-green-800 text-white shadow-lg border-b-2 border-green-500'>
+    <nav className='bg-slate-800 text-white shadow-md'>
       <div className='max-w-7xl mx-auto px-4 py-4 flex justify-between items-center'>
-        <h1 className='text-3xl font-bold uppercase tracking-widest' style={{ color: '#22c55e' }}>
-          FOOD STORE
+        <h1 className='text-xl font-bold flex items-center gap-2'>
+          🍽️ FOOD STORE
         </h1>
 
-        <div className='flex gap-6'>
+        <div className='flex gap-8'>
           <Link
             to='/'
-            className={`px-3 py-2 uppercase font-bold text-sm tracking-wide transition-colors ${
+            className={`px-3 py-2 font-medium text-sm transition-colors ${
               isActive('/') 
-                ? 'text-green-400 border-b-2 border-green-400' 
-                : 'text-white hover:text-green-400'
+                ? 'text-orange-500 border-b-2 border-orange-500' 
+                : 'text-white hover:text-orange-500'
             }`}
           >
-            CATEGORÍAS
+            Categorías
           </Link>
           <Link
             to='/productos'
-            className={`px-3 py-2 uppercase font-bold text-sm tracking-wide transition-colors ${
+            className={`px-3 py-2 font-medium text-sm transition-colors ${
               isActive('/productos') 
-                ? 'text-green-400 border-b-2 border-green-400' 
-                : 'text-white hover:text-green-400'
+                ? 'text-orange-500 border-b-2 border-orange-500' 
+                : 'text-white hover:text-orange-500'
             }`}
           >
-            PRODUCTOS
+            Productos
           </Link>
           <Link
             to='/ingredientes'
-            className={`px-3 py-2 uppercase font-bold text-sm tracking-wide transition-colors ${
+            className={`px-3 py-2 font-medium text-sm transition-colors ${
               isActive('/ingredientes') 
-                ? 'text-green-400 border-b-2 border-green-400' 
-                : 'text-white hover:text-green-400'
+                ? 'text-orange-500 border-b-2 border-orange-500' 
+                : 'text-white hover:text-orange-500'
             }`}
           >
-            INGREDIENTES
+            Ingredientes
           </Link>
         </div>
       </div>

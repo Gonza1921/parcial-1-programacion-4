@@ -64,8 +64,11 @@ export const IngredientesPage: React.FC = () => {
   return (
     <div className='space-y-6'>
       <div className='flex justify-between items-center'>
-        <h1 className='text-3xl font-bold'>INGREDIENTES</h1>
-        <Button onClick={() => handleOpenModal()}>+ NUEVO INGREDIENTE</Button>
+        <div>
+          <h1 className='text-2xl font-bold text-gray-900'>Ingredientes</h1>
+          <p className='text-sm text-gray-500 mt-1'>Gestiona los ingredientes disponibles</p>
+        </div>
+        <Button onClick={() => handleOpenModal()}>+ Nuevo ingrediente</Button>
       </div>
 
       {successMessage && <Alert type='success' message={successMessage} />}
@@ -75,14 +78,12 @@ export const IngredientesPage: React.FC = () => {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <div className='bg-white rounded-lg shadow p-6'>
-          <IngredienteTable
-            ingredientes={ingredientes}
-            onEdit={handleOpenModal}
-            onDelete={handleDelete}
-            isDeleting={deleteMutation.isPending}
-          />
-        </div>
+        <IngredienteTable
+          ingredientes={ingredientes}
+          onEdit={handleOpenModal}
+          onDelete={handleDelete}
+          isDeleting={deleteMutation.isPending}
+        />
       )}
 
       <IngredienteModal

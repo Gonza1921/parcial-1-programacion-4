@@ -68,8 +68,11 @@ export const ProductosPage: React.FC = () => {
   return (
     <div className='space-y-6'>
       <div className='flex justify-between items-center'>
-        <h1 className='text-3xl font-bold uppercase'>PRODUCTOS</h1>
-        <Button onClick={() => handleOpenModal()}>+ NUEVO PRODUCTO</Button>
+        <div>
+          <h1 className='text-2xl font-bold text-gray-900'>Productos</h1>
+          <p className='text-sm text-gray-500 mt-1'>Gestiona tu catálogo de productos</p>
+        </div>
+        <Button onClick={() => handleOpenModal()}>+ Nuevo producto</Button>
       </div>
 
       {successMessage && <Alert type='success' message={successMessage} />}
@@ -79,14 +82,12 @@ export const ProductosPage: React.FC = () => {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <div className='bg-white border-2 border-black shadow-lg p-6'>
-          <ProductoTable
-            productos={productos}
-            onEdit={handleOpenModal}
-            onDelete={handleDelete}
-            isDeleting={deleteMutation.isPending}
-          />
-        </div>
+        <ProductoTable
+          productos={productos}
+          onEdit={handleOpenModal}
+          onDelete={handleDelete}
+          isDeleting={deleteMutation.isPending}
+        />
       )}
 
       <ProductoModal

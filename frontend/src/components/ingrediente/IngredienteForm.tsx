@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button } from '../common'
+import { Button, Alert } from '../common'
 import type { Ingrediente, CreateIngredientePayload, UpdateIngredientePayload } from '../../types'
 
 interface IngredienteFormProps {
@@ -35,15 +35,15 @@ export const IngredienteForm: React.FC<IngredienteFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit} className='space-y-4'>
-      {error && <div className='text-red-600 text-sm font-bold'>{error}</div>}
+      {error && <Alert type='error' message={error} />}
 
       <div>
-        <label className='block text-sm font-bold uppercase text-black mb-2'>Nombre</label>
+        <label className='block text-sm font-medium text-gray-700 mb-1'>Nombre</label>
         <input
           type='text'
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
-          className='w-full px-4 py-2 border-2 border-green-600 focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-200 uppercase font-bold'
+          className='w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 text-gray-900'
           placeholder='Nombre del ingrediente'
         />
       </div>
