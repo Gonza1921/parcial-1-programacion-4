@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Button } from '../common'
-import type { Producto, Categoria, Material, CreateProductoPayload, UpdateProductoPayload } from '../../types'
+import type { Producto, Categoria, Ingrediente, CreateProductoPayload, UpdateProductoPayload } from '../../types'
 
 interface ProductoFormProps {
   producto?: Producto
   categorias: Categoria[]
-  materiales: Material[]
+  ingredientes: Ingrediente[]
   onSubmit: (data: CreateProductoPayload | UpdateProductoPayload) => void
   isLoading?: boolean
 }
@@ -13,7 +13,7 @@ interface ProductoFormProps {
 export const ProductoForm: React.FC<ProductoFormProps> = ({
   producto,
   categorias,
-  materiales,
+  ingredientes,
   onSubmit,
   isLoading = false,
 }) => {
@@ -23,8 +23,8 @@ export const ProductoForm: React.FC<ProductoFormProps> = ({
   const [talle, setTalle] = useState(producto?.talle?.toString() || '')
   const [color, setColor] = useState(producto?.color || '')
   const [categoria_id, setCategoria_id] = useState(producto?.categoria_id?.toString() || '')
-  const [materiales_ids, setMateriales_ids] = useState<number[]>(
-    producto?.materiales?.map((m) => m.id) || [],
+  const [ingredientes_ids, setIngredientes_ids] = useState<number[]>(
+    producto?.ingredientes?.map((m) => m.id) || [],
   )
   const [error, setError] = useState('')
 
@@ -81,12 +81,12 @@ export const ProductoForm: React.FC<ProductoFormProps> = ({
       talle: talleNum,
       color: color.trim(),
       categoria_id: parseInt(categoria_id),
-      materiales_ids: materiales_ids.length > 0 ? materiales_ids : undefined,
+      ingredientes_ids: ingredientes_ids.length > 0 ? ingredientes_ids : undefined,
     })
   }
 
-  const toggleMaterial = (id: number) => {
-    setMateriales_ids((prev) =>
+  const toggleIngrediente = (id: number) => {
+    setIngredientes_ids((prev) =>
       prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id],
     )
   }
@@ -177,22 +177,22 @@ export const ProductoForm: React.FC<ProductoFormProps> = ({
       </div>
 
       <div>
-        <label className='block text-sm font-bold uppercase text-black mb-2'>Materiales</label>
+        <label className='block text-sm font-bold uppercase text-black mb-2'>Ingredientes</label>
         <div className='space-y-2 max-h-40 overflow-y-auto border-2 border-black p-3 bg-gray-50'>
-          {materiales.length > 0 ? (
-            materiales.map((mat) => (
-              <label key={mat.id} className='flex items-center'>
+          {ingredientes.length > 0 ? (
+            ingredientes.map((ing) => (
+              <label key={ing.id} className='flex items-center'>
                 <input
                   type='checkbox'
-                  checked={materiales_ids.includes(mat.id)}
-                  onChange={() => toggleMaterial(mat.id)}
+                  checked={ingredientes_ids.includes(ing.id)}
+                  onChange={() => toggleIngrediente(ing.id)}
                   className='mr-2 w-4 h-4 border-2 border-black'
                 />
-                <span className='text-sm font-bold uppercase'>{mat.nombre}</span>
+                <span className='text-sm font-bold uppercase'>{ing.nombre}</span>
               </label>
             ))
           ) : (
-            <p className='text-sm text-gray-500 font-bold'>NO HAY MATERIALES DISPONIBLES</p>
+            <p className='text-sm text-gray-500 font-bold'>NO HAY INGREDIENTES DISPONIBLES</p>
           )}
         </div>
       </div>

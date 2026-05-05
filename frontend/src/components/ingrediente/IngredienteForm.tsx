@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import { Button } from '../common'
-import type { Material, CreateMaterialPayload, UpdateMaterialPayload } from '../../types'
+import type { Ingrediente, CreateIngredientePayload, UpdateIngredientePayload } from '../../types'
 
-interface MaterialFormProps {
-  material?: Material
-  onSubmit: (data: CreateMaterialPayload | UpdateMaterialPayload) => void
+interface IngredienteFormProps {
+  ingrediente?: Ingrediente
+  onSubmit: (data: CreateIngredientePayload | UpdateIngredientePayload) => void
   isLoading?: boolean
 }
 
-export const MaterialForm: React.FC<MaterialFormProps> = ({
-  material,
+export const IngredienteForm: React.FC<IngredienteFormProps> = ({
+  ingrediente,
   onSubmit,
   isLoading = false,
 }) => {
-  const [nombre, setNombre] = useState(material?.nombre || '')
+  const [nombre, setNombre] = useState(ingrediente?.nombre || '')
   const [error, setError] = useState('')
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -43,14 +43,14 @@ export const MaterialForm: React.FC<MaterialFormProps> = ({
           type='text'
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
-          className='w-full px-4 py-2 border-2 border-black focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-200 uppercase font-bold'
-          placeholder='Nombre del material'
+          className='w-full px-4 py-2 border-2 border-green-600 focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-200 uppercase font-bold'
+          placeholder='Nombre del ingrediente'
         />
       </div>
 
       <div className='flex gap-2 justify-end pt-4'>
         <Button type='submit' isLoading={isLoading}>
-          {material ? 'Actualizar' : 'Crear'}
+          {ingrediente ? 'Actualizar' : 'Crear'}
         </Button>
       </div>
     </form>

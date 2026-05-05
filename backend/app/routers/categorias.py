@@ -1,9 +1,7 @@
-﻿from fastapi import APIRouter, Depends, HTTPException, status
+﻿from fastapi import APIRouter, HTTPException, status
 from typing import Annotated
 from fastapi import Query
-from sqlmodel import Session
 
-from app.database import get_session
 from app.services.categoria_service import (
     get_all_categorias,
     get_categoria_by_id,
@@ -21,15 +19,14 @@ router = APIRouter(prefix='/categorias', tags=['categorias'])
 async def list_categorias(
     skip: Annotated[int, Query(ge=0)] = 0,
     limit: Annotated[int, Query(gt=0, le=100)] = 10,
-    session: Session = Depends(get_session),
 ):
-    return await get_all_categorias(session, skip, limit)
+    return get_all_categorias(skip, limit)
 
 
 @router.get('/{id}', response_model=CategoriaRead)
-async def get_categoria(id: int, session: Session = Depends(get_session)):
+async def get_categoria(id: int):
     try:
-        return await get_categoria_by_id(session, id)
+        return get_categoria_by_id(id)
     except NotFoundException as e:
         raise HTTPException(status_code=404, detail=str(e))
 
@@ -37,10 +34,9 @@ async def get_categoria(id: int, session: Session = Depends(get_session)):
 @router.post('', response_model=CategoriaRead, status_code=status.HTTP_201_CREATED)
 async def create_categoria_endpoint(
     categoria_in: CategoriaCreate,
-    session: Session = Depends(get_session),
 ):
     try:
-        return await create_categoria(session, categoria_in)
+        return create_categoria(categoria_in)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -49,10 +45,9 @@ async def create_categoria_endpoint(
 async def update_categoria_endpoint(
     id: int,
     categoria_in: CategoriaUpdate,
-    session: Session = Depends(get_session),
 ):
     try:
-        return await update_categoria(session, id, categoria_in)
+        return update_categoria(id, categoria_in)
     except NotFoundException as e:
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
@@ -62,9 +57,9 @@ async def update_categoria_endpoint(
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_categoria_endpoint(
     id: int,
-    session: Session = Depends(get_session),
 ):
     try:
-        await delete_categoria(session, id)
+        delete_categoria(id)
     except NotFoundException as e:
         raise HTTPException(status_code=404, detail=str(e))
+

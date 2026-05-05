@@ -1,6 +1,6 @@
-from app.models.associations import ProductoMaterial  # noqa: F401
-from app.models.categoria import Categoria
-from app.models.producto import Producto
-from app.models.material import Material
+from app.models.associations import ProductoIngrediente, ProductoMaterial  # noqa: F401
+from app.models.categoria import Categoria  # noqa: F401
+from app.models.producto import Producto  # noqa: F401
+from app.models.ingrediente import Ingrediente  # noqa: F401
 
-__all__ = ['Categoria', 'Producto', 'Material', 'ProductoMaterial']
+__all__ = ['Categoria', 'Producto', 'Ingrediente', 'ProductoIngrediente', 'ProductoMaterial']

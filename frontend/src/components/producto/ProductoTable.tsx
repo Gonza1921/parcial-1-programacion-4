@@ -26,7 +26,7 @@ export const ProductoTable: React.FC<ProductoTableProps> = ({
             <th className='px-6 py-4 text-left text-sm font-bold uppercase'>Talle</th>
             <th className='px-6 py-4 text-left text-sm font-bold uppercase'>Color</th>
             <th className='px-6 py-4 text-left text-sm font-bold uppercase'>Categoría</th>
-            <th className='px-6 py-4 text-left text-sm font-bold uppercase'>Materiales</th>
+            <th className='px-6 py-4 text-left text-sm font-bold uppercase'>Ingredientes</th>
             <th className='px-6 py-4 text-right text-sm font-bold uppercase'>Acciones</th>
           </tr>
         </thead>
@@ -40,8 +40,8 @@ export const ProductoTable: React.FC<ProductoTableProps> = ({
               <td className='px-6 py-3 text-sm font-bold uppercase'>{producto.color}</td>
               <td className='px-6 py-3 text-sm uppercase'>{producto.categoria.nombre}</td>
               <td className='px-6 py-3 text-sm'>
-                {producto.materiales.length > 0
-                  ? producto.materiales.map((m) => m.nombre).join(', ')
+                {producto.ingredientes.length > 0
+                  ? producto.ingredientes.map((ing) => ing.nombre).join(', ')
                   : '-'}
               </td>
               <td className='px-6 py-3 text-right space-x-2'>

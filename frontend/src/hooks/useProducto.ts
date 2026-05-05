@@ -4,10 +4,10 @@ import type { Producto, CreateProductoPayload, UpdateProductoPayload } from '../
 
 const QUERY_KEY = ['productos']
 
-export const useProductosQuery = (categoria_id?: number, material_id?: number) => {
+export const useProductosQuery = (categoria_id?: number, ingrediente_id?: number) => {
   return useQuery<Producto[]>({
-    queryKey: [QUERY_KEY, categoria_id, material_id],
-    queryFn: () => productoService.getAll(0, 100, categoria_id, material_id),
+    queryKey: [QUERY_KEY, categoria_id, ingrediente_id],
+    queryFn: () => productoService.getAll(0, 100, categoria_id, ingrediente_id),
   })
 }
 

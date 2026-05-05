@@ -1,40 +1,42 @@
 import { apiClient } from './api'
 import type { Producto, CreateProductoPayload, UpdateProductoPayload } from '../types'
 
-export const productoService = {
-  getAll: async (
+export class ProductoService {
+  async getAll(
     skip = 0,
     limit = 10,
     categoria_id?: number,
-    material_id?: number,
-  ): Promise<Producto[]> => {
+    ingrediente_id?: number,
+  ): Promise<Producto[]> {
     return apiClient<Producto[]>('/productos', {
-      params: { skip, limit, categoria_id, material_id },
+      params: { skip, limit, categoria_id, ingrediente_id },
     })
-  },
+  }
 
-  getById: async (id: number): Promise<Producto> => {
+  async getById(id: number): Promise<Producto> {
     return apiClient<Producto>(`/productos/${id}`)
-  },
+  }
 
-  create: async (payload: CreateProductoPayload): Promise<Producto> => {
+  async create(payload: CreateProductoPayload): Promise<Producto> {
     return apiClient<Producto>('/productos', {
       method: 'POST',
       body: JSON.stringify(payload),
     })
-  },
+  }
 
-  update: async (id: number, payload: UpdateProductoPayload): Promise<Producto> => {
+  async update(id: number, payload: UpdateProductoPayload): Promise<Producto> {
     return apiClient<Producto>(`/productos/${id}`, {
       method: 'PUT',
       body: JSON.stringify(payload),
     })
-  },
+  }
 
-  delete: async (id: number): Promise<void> => {
+  async delete(id: number): Promise<void> {
     return apiClient<void>(`/productos/${id}`, {
       method: 'DELETE',
     })
-  },
+  }
 }
+
+export const productoService = new ProductoService()
 

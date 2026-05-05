@@ -1,10 +1,10 @@
 from typing import Optional, List, TYPE_CHECKING
 from sqlmodel import SQLModel, Field, Relationship
-from app.models.associations import ProductoMaterial
+from app.models.associations import ProductoIngrediente
 
 if TYPE_CHECKING:
     from app.models.categoria import Categoria
-    from app.models.material import Material
+    from app.models.ingrediente import Ingrediente
 
 
 class Producto(SQLModel, table=True):
@@ -17,7 +17,7 @@ class Producto(SQLModel, table=True):
     color: Optional[str] = Field(default=None, max_length=50)
     categoria_id: int = Field(foreign_key="categorias.id")
     categoria: Optional["Categoria"] = Relationship(back_populates="productos")
-    materiales: List["Material"] = Relationship(
+    ingredientes: List["Ingrediente"] = Relationship(
         back_populates="productos",
-        link_model=ProductoMaterial
+        link_model=ProductoIngrediente
     )

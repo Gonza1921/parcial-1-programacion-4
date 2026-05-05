@@ -1,14 +1,14 @@
 import React from 'react'
 import { Modal, Alert } from '../common'
 import { ProductoForm } from './ProductoForm'
-import type { Producto, Categoria, Material, CreateProductoPayload, UpdateProductoPayload } from '../../types'
+import type { Producto, Categoria, Ingrediente, CreateProductoPayload, UpdateProductoPayload } from '../../types'
 
 interface ProductoModalProps {
   isOpen: boolean
   onClose: () => void
   producto?: Producto
   categorias: Categoria[]
-  materiales: Material[]
+  ingredientes: Ingrediente[]
   onSubmit: (data: CreateProductoPayload | UpdateProductoPayload) => void
   isLoading?: boolean
   error?: string
@@ -20,7 +20,7 @@ export const ProductoModal: React.FC<ProductoModalProps> = ({
   onClose,
   producto,
   categorias,
-  materiales,
+  ingredientes,
   onSubmit,
   isLoading = false,
   error,
@@ -41,7 +41,7 @@ export const ProductoModal: React.FC<ProductoModalProps> = ({
       <ProductoForm
         producto={producto}
         categorias={categorias}
-        materiales={materiales}
+        ingredientes={ingredientes}
         onSubmit={handleSubmit}
         isLoading={isLoading}
       />

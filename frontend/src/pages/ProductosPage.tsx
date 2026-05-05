@@ -8,13 +8,13 @@ import {
   useProductoDelete,
 } from '../hooks/useProducto'
 import { useCategoriasQuery } from '../hooks/useCategoria'
-import { useMateriasQuery } from '../hooks/useMaterial'
+import { useIngredientesQuery } from '../hooks/useIngrediente'
 import type { Producto, CreateProductoPayload, UpdateProductoPayload } from '../types'
 
 export const ProductosPage: React.FC = () => {
   const { data: productos = [], isLoading, error } = useProductosQuery()
   const { data: categorias = [] } = useCategoriasQuery()
-  const { data: materiales = [] } = useMateriasQuery()
+  const { data: ingredientes = [] } = useIngredientesQuery()
   const createMutation = useProductoCreate()
   const updateMutation = useProductoUpdate()
   const deleteMutation = useProductoDelete()
@@ -97,7 +97,7 @@ export const ProductosPage: React.FC = () => {
         }}
         producto={editingProducto}
         categorias={categorias}
-        materiales={materiales}
+        ingredientes={ingredientes}
         onSubmit={(editingProducto ? handleUpdate : handleCreate) as (data: CreateProductoPayload | UpdateProductoPayload) => void}
         isLoading={createMutation.isPending || updateMutation.isPending}
         error={createMutation.isError || updateMutation.isError ? 'Error en la operación' : ''}

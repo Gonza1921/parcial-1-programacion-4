@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from app.schemas.categoria import CategoriaRead
-from app.schemas.material import MaterialRead
+from app.schemas.ingrediente import IngredienteRead
 
 
 class ProductoCreate(BaseModel):
@@ -10,7 +10,7 @@ class ProductoCreate(BaseModel):
     talle: int = Field(ge=1, le=5)
     color: str = Field(min_length=2, max_length=50)
     categoria_id: int
-    materiales_ids: list[int] | None = Field(default=None)
+    ingredientes_ids: list[int] | None = Field(default=None)
 
 
 class ProductoUpdate(BaseModel):
@@ -20,7 +20,7 @@ class ProductoUpdate(BaseModel):
     talle: int | None = Field(default=None, ge=1, le=5)
     color: str | None = Field(default=None, min_length=2, max_length=50)
     categoria_id: int | None = Field(default=None)
-    materiales_ids: list[int] | None = Field(default=None)
+    ingredientes_ids: list[int] | None = Field(default=None)
 
 
 class ProductoRead(BaseModel):
@@ -32,4 +32,4 @@ class ProductoRead(BaseModel):
     color: str
     categoria_id: int
     categoria: CategoriaRead
-    materiales: list[MaterialRead]
+    ingredientes: list[IngredienteRead]

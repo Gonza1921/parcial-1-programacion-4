@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import SQLModel
 
 from app.database import engine
-from app.routers import categorias, materiales, productos
+from app.routers import categorias, ingredientes, productos
 from app.utils.exceptions import NotFoundException, ValidationException
 
 
@@ -16,9 +16,9 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title='DOLLAR RICH KIDZ - API REST',
+    title='FOOD STORE - API REST',
     version='1.0.0',
-    description='API para gestionar Categorías, Productos y Materiales',
+    description='API para gestionar Categorías, Productos e Ingredientes',
     lifespan=lifespan,
 )
 
@@ -57,7 +57,7 @@ async def health():
 
 # Include routers
 app.include_router(categorias.router, prefix="/api")
-app.include_router(materiales.router, prefix="/api")
+app.include_router(ingredientes.router, prefix="/api")
 app.include_router(productos.router, prefix="/api")
 
 
@@ -65,10 +65,10 @@ app.include_router(productos.router, prefix="/api")
 @app.get('/', tags=['Root'])
 async def root():
     return {
-        'message': 'Bienvenido a DOLLAR RICH KIDZ API',
+        'message': 'Bienvenido a FOOD STORE API',
         'endpoints': {
             'categorias': '/api/categorias',
-            'materiales': '/api/materiales',
+            'ingredientes': '/api/ingredientes',
             'productos': '/api/productos',
             'health': '/health',
             'docs': '/docs',
