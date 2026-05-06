@@ -11,7 +11,7 @@ from app.utils.exceptions import NotFoundException, ValidationException
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     SQLModel.metadata.create_all(engine)
-    print('✓ Tablas creadas en la base de datos')
+    print('[OK] Tablas creadas en la base de datos')
     yield
 
 

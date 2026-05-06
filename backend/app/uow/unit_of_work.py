@@ -7,7 +7,7 @@ class UnitOfWork:
         self.session: Session | None = None
 
     def __enter__(self):
-        self.session = Session(engine)
+        self.session = Session(engine, expire_on_commit=False)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):

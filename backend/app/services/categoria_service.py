@@ -8,7 +8,8 @@ from app.utils.exceptions import NotFoundException
 def get_all_categorias(skip: int = 0, limit: int = 10):
     with UnitOfWork() as uow:
         repo = CategoriaRepository(uow.session)
-        return repo.get_all(skip, limit)
+        results = repo.get_all(skip, limit)
+        return [item.model_dump() for item in results]
 
 
 def get_categoria_by_id(categoria_id: int):
@@ -17,14 +18,15 @@ def get_categoria_by_id(categoria_id: int):
         categoria = repo.get_by_id(categoria_id)
         if not categoria:
             raise NotFoundException(f'Categoría con id {categoria_id} no existe')
-        return categoria
+        return categoria.model_dump()
 
 
 def create_categoria(categoria_in: CategoriaCreate):
     with UnitOfWork() as uow:
         repo = CategoriaRepository(uow.session)
         categoria = Categoria.from_orm(categoria_in)
-        return repo.create(categoria)
+        created = repo.create(categoria)
+        return created.model_dump()
 
 
 def update_categoria(categoria_id: int, categoria_in: CategoriaUpdate):
@@ -39,7 +41,7 @@ def update_categoria(categoria_id: int, categoria_in: CategoriaUpdate):
             setattr(categoria, field, value)
         
         repo.session.add(categoria)
-        return categoria
+        return categoria.model_dump()
 
 
 def delete_categoria(categoria_id: int):

@@ -8,7 +8,8 @@ from app.utils.exceptions import NotFoundException
 def get_all_ingredientes(skip: int = 0, limit: int = 10):
     with UnitOfWork() as uow:
         repo = IngredienteRepository(uow.session)
-        return repo.get_all(skip, limit)
+        results = repo.get_all(skip, limit)
+        return [item.model_dump() for item in results]
 
 
 def get_ingrediente_by_id(ingrediente_id: int):
@@ -17,14 +18,15 @@ def get_ingrediente_by_id(ingrediente_id: int):
         ingrediente = repo.get_by_id(ingrediente_id)
         if not ingrediente:
             raise NotFoundException(f'Ingrediente con id {ingrediente_id} no existe')
-        return ingrediente
+        return ingrediente.model_dump()
 
 
 def create_ingrediente(ingrediente_in: IngredienteCreate):
     with UnitOfWork() as uow:
         repo = IngredienteRepository(uow.session)
         ingrediente = Ingrediente.from_orm(ingrediente_in)
-        return repo.create(ingrediente)
+        created = repo.create(ingrediente)
+        return created.model_dump()
 
 
 def update_ingrediente(ingrediente_id: int, ingrediente_in: IngredienteUpdate):
@@ -39,7 +41,7 @@ def update_ingrediente(ingrediente_id: int, ingrediente_in: IngredienteUpdate):
             setattr(ingrediente, field, value)
         
         repo.session.add(ingrediente)
-        return ingrediente
+        return ingrediente.model_dump()
 
 
 def delete_ingrediente(ingrediente_id: int):

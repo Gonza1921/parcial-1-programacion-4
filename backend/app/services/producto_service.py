@@ -28,7 +28,8 @@ def get_all_productos(
             )
 
         statement = statement.offset(skip).limit(limit)
-        return uow.session.exec(statement).all()
+        results = uow.session.exec(statement).all()
+        return [item.model_dump() for item in results]
 
 
 def get_producto_by_id(producto_id: int):
@@ -37,7 +38,7 @@ def get_producto_by_id(producto_id: int):
         producto = repo.get_by_id(producto_id)
         if not producto:
             raise NotFoundException(f'Producto con id {producto_id} no existe')
-        return producto
+        return producto.model_dump()
 
 
 def create_producto(producto_in: ProductoCreate):
@@ -66,7 +67,8 @@ def create_producto(producto_in: ProductoCreate):
             ).all()
             producto.ingredientes = ingredientes
 
-        return repo.create(producto)
+        created = repo.create(producto)
+        return created.model_dump()
 
 
 def update_producto(
@@ -99,7 +101,7 @@ def update_producto(
             producto.ingredientes = ingredientes
 
         repo.session.add(producto)
-        return producto
+        return producto.model_dump()
 
 
 def delete_producto(producto_id: int):
