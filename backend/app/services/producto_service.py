@@ -9,6 +9,38 @@ from app.schemas.producto import ProductoCreate, ProductoUpdate
 from app.utils.exceptions import NotFoundException
 
 
+def _serialize_producto(producto: Producto) -> dict:
+    """Serializa un producto con sus relaciones dentro del contexto de la sesión."""
+    # Serializar categoría
+    categoria_data = None
+    if producto.categoria:
+        categoria_data = {
+            "id": producto.categoria.id,
+            "nombre": producto.categoria.nombre,
+            "descripcion": producto.categoria.descripcion,
+            "parent_id": producto.categoria.parent_id,
+            "subcategorias": []
+        }
+    
+    # Serializar ingredientes
+    ingredientes_data = [
+        {"id": ing.id, "nombre": ing.nombre}
+        for ing in producto.ingredientes
+    ]
+    
+    return {
+        "id": producto.id,
+        "nombre": producto.nombre,
+        "precio": producto.precio,
+        "descripcion": producto.descripcion,
+        "stock": producto.stock,
+        "disponibilidad": producto.disponibilidad,
+        "categoria_id": producto.categoria_id,
+        "categoria": categoria_data,
+        "ingredientes": ingredientes_data
+    }
+
+
 def get_all_productos(
     skip: int = 0,
     limit: int = 10,
@@ -29,7 +61,8 @@ def get_all_productos(
 
         statement = statement.offset(skip).limit(limit)
         results = uow.session.exec(statement).all()
-        return [item.model_dump() for item in results]
+        # Serializar dentro del contexto del UoW para acceder a las relaciones
+        return [_serialize_producto(item) for item in results]
 
 
 def get_producto_by_id(producto_id: int):
@@ -38,7 +71,8 @@ def get_producto_by_id(producto_id: int):
         producto = repo.get_by_id(producto_id)
         if not producto:
             raise NotFoundException(f'Producto con id {producto_id} no existe')
-        return producto.model_dump()
+        # Serializar dentro del contexto del UoW para acceder a las relaciones
+        return _serialize_producto(producto)
 
 
 def create_producto(producto_in: ProductoCreate):
@@ -68,7 +102,8 @@ def create_producto(producto_in: ProductoCreate):
             producto.ingredientes = ingredientes
 
         created = repo.create(producto)
-        return created.model_dump()
+        # Serializar dentro del contexto del UoW para acceder a las relaciones
+        return _serialize_producto(created)
 
 
 def update_producto(
@@ -101,7 +136,8 @@ def update_producto(
             producto.ingredientes = ingredientes
 
         repo.session.add(producto)
-        return producto.model_dump()
+        # Serializar dentro del contexto del UoW para acceder a las relaciones
+        return _serialize_producto(producto)
 
 
 def delete_producto(producto_id: int):

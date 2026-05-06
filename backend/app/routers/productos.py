@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status, Query
-from typing import Annotated
+from typing import Annotated, Any
 
 from app.services.producto_service import (
     get_all_productos,
@@ -14,7 +14,7 @@ from app.utils.exceptions import NotFoundException
 router = APIRouter(prefix='/productos', tags=['productos'])
 
 
-@router.get('', response_model=list[ProductoRead])
+@router.get('', response_model=list[dict[str, Any]])
 async def list_productos(
     skip: Annotated[int, Query(ge=0)] = 0,
     limit: Annotated[int, Query(gt=0, le=100)] = 10,
@@ -29,7 +29,7 @@ async def list_productos(
     )
 
 
-@router.get('/{id}', response_model=ProductoRead)
+@router.get('/{id}', response_model=dict[str, Any])
 async def get_producto(id: int):
     try:
         return get_producto_by_id(id)
@@ -37,7 +37,7 @@ async def get_producto(id: int):
         raise HTTPException(status_code=404, detail=str(e))
 
 
-@router.post('', response_model=ProductoRead, status_code=status.HTTP_201_CREATED)
+@router.post('', response_model=dict[str, Any], status_code=status.HTTP_201_CREATED)
 async def create_producto_endpoint(
     producto_in: ProductoCreate,
 ):
@@ -49,7 +49,7 @@ async def create_producto_endpoint(
         raise HTTPException(status_code=400, detail=str(e))
 
 
-@router.put('/{id}', response_model=ProductoRead)
+@router.put('/{id}', response_model=dict[str, Any])
 async def update_producto_endpoint(
     id: int,
     producto_in: ProductoUpdate,

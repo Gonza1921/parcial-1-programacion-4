@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from app.schemas.categoria import CategoriaRead
+from typing import Any
 from app.schemas.ingrediente import IngredienteRead
 
 
@@ -31,5 +31,5 @@ class ProductoRead(BaseModel):
     stock: int
     disponibilidad: bool
     categoria_id: int
-    categoria: CategoriaRead
+    categoria: dict[str, Any]  # Use dict instead of CategoriaRead to avoid recursion issues
     ingredientes: list[IngredienteRead]
