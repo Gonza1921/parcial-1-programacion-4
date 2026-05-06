@@ -55,8 +55,8 @@ def create_producto(producto_in: ProductoCreate):
             nombre=producto_in.nombre,
             precio=producto_in.precio,
             descripcion=producto_in.descripcion,
-            talle=producto_in.talle,
-            color=producto_in.color,
+            stock=producto_in.stock,
+            disponibilidad=producto_in.disponibilidad,
             categoria_id=producto_in.categoria_id,
         )
 

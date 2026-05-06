@@ -7,8 +7,8 @@ class ProductoCreate(BaseModel):
     nombre: str = Field(min_length=3, max_length=100)
     precio: float = Field(gt=0)
     descripcion: str | None = Field(default=None, max_length=500)
-    talle: int = Field(ge=1, le=5)
-    color: str = Field(min_length=2, max_length=50)
+    stock: int = Field(default=0, ge=0)
+    disponibilidad: bool = Field(default=True)
     categoria_id: int
     ingredientes_ids: list[int] | None = Field(default=None)
 
@@ -17,8 +17,8 @@ class ProductoUpdate(BaseModel):
     nombre: str | None = Field(default=None, min_length=3, max_length=100)
     precio: float | None = Field(default=None, gt=0)
     descripcion: str | None = Field(default=None, max_length=500)
-    talle: int | None = Field(default=None, ge=1, le=5)
-    color: str | None = Field(default=None, min_length=2, max_length=50)
+    stock: int | None = Field(default=None, ge=0)
+    disponibilidad: bool | None = Field(default=None)
     categoria_id: int | None = Field(default=None)
     ingredientes_ids: list[int] | None = Field(default=None)
 
@@ -28,8 +28,8 @@ class ProductoRead(BaseModel):
     nombre: str
     precio: float
     descripcion: str | None
-    talle: int
-    color: str
+    stock: int
+    disponibilidad: bool
     categoria_id: int
     categoria: CategoriaRead
     ingredientes: list[IngredienteRead]

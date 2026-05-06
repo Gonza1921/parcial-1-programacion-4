@@ -13,8 +13,8 @@ class Producto(SQLModel, table=True):
     nombre: str = Field(index=True, min_length=3, max_length=100)
     precio: float = Field(gt=0)
     descripcion: Optional[str] = Field(default=None, max_length=500)
-    talle: int = Field(ge=1, le=5)
-    color: Optional[str] = Field(default=None, max_length=50)
+    stock: int = Field(default=0, ge=0)
+    disponibilidad: bool = Field(default=True)
     categoria_id: int = Field(foreign_key="categorias.id")
     categoria: Optional["Categoria"] = Relationship(back_populates="productos")
     ingredientes: List["Ingrediente"] = Relationship(

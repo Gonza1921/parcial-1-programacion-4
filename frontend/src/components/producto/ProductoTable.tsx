@@ -23,8 +23,8 @@ export const ProductoTable: React.FC<ProductoTableProps> = ({
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wide'>ID</th>
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wide'>Nombre</th>
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wide'>Precio</th>
-            <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wide'>Talle</th>
-            <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wide'>Color</th>
+            <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wide'>Stock</th>
+            <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wide'>Disponibilidad</th>
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wide'>Categoría</th>
             <th className='px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wide'>Ingredientes</th>
             <th className='px-6 py-3 text-right text-xs font-medium text-gray-600 uppercase tracking-wide'>Acciones</th>
@@ -36,8 +36,16 @@ export const ProductoTable: React.FC<ProductoTableProps> = ({
               <td className='px-6 py-4 text-sm text-gray-900'>{producto.id}</td>
               <td className='px-6 py-4 text-sm font-medium text-gray-900'>{producto.nombre}</td>
               <td className='px-6 py-4 text-sm text-gray-900'>${producto.precio.toFixed(2)}</td>
-              <td className='px-6 py-4 text-sm text-gray-900'>{producto.talle}</td>
-              <td className='px-6 py-4 text-sm text-gray-900'>{producto.color}</td>
+              <td className='px-6 py-4 text-sm text-gray-900'>{producto.stock} u.</td>
+              <td className='px-6 py-4 text-sm'>
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                  producto.disponibilidad
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
+                }`}>
+                  {producto.disponibilidad ? 'Disponible' : 'No disponible'}
+                </span>
+              </td>
               <td className='px-6 py-4 text-sm text-gray-900'>{producto.categoria.nombre}</td>
               <td className='px-6 py-4 text-sm text-gray-600'>
                 {producto.ingredientes.length > 0

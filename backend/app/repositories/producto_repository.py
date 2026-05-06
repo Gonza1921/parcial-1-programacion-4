@@ -19,16 +19,16 @@ class ProductoRepository(BaseRepository[Producto]):
             select(self.model).where(self.model.categoria_id == categoria_id)
         ).all()
 
-    def get_by_color(self, color: str) -> list[Producto]:
-        """Get all products by color"""
-        return self.session.exec(
-            select(self.model).where(self.model.color == color)
-        ).all()
-
     def get_by_price_range(self, min_price: float, max_price: float) -> list[Producto]:
         """Get products within a price range"""
         return self.session.exec(
             select(self.model).where(
                 (self.model.precio >= min_price) & (self.model.precio <= max_price)
             )
+        ).all()
+
+    def get_available(self) -> list[Producto]:
+        """Get all available products"""
+        return self.session.exec(
+            select(self.model).where(self.model.disponibilidad == True)
         ).all()

@@ -20,8 +20,8 @@ export const ProductoForm: React.FC<ProductoFormProps> = ({
   const [nombre, setNombre] = useState(producto?.nombre || '')
   const [precio, setPrecio] = useState(producto?.precio?.toString() || '')
   const [descripcion, setDescripcion] = useState(producto?.descripcion || '')
-  const [talle, setTalle] = useState(producto?.talle?.toString() || '')
-  const [color, setColor] = useState(producto?.color || '')
+  const [stock, setStock] = useState(producto?.stock?.toString() || '0')
+  const [disponibilidad, setDisponibilidad] = useState(producto?.disponibilidad ?? true)
   const [categoria_id, setCategoria_id] = useState(producto?.categoria_id?.toString() || '')
   const [ingredientes_ids, setIngredientes_ids] = useState<number[]>(
     producto?.ingredientes?.map((m) => m.id) || [],
@@ -53,19 +53,9 @@ export const ProductoForm: React.FC<ProductoFormProps> = ({
       return
     }
 
-    if (!talle) {
-      setError('El talle es requerido')
-      return
-    }
-
-    const talleNum = parseInt(talle)
-    if (isNaN(talleNum) || talleNum < 1 || talleNum > 5) {
-      setError('El talle debe ser un número entre 1 y 5')
-      return
-    }
-
-    if (!color.trim()) {
-      setError('El color es requerido')
+    const stockNum = parseInt(stock)
+    if (isNaN(stockNum) || stockNum < 0) {
+      setError('El stock debe ser un número mayor o igual a 0')
       return
     }
 
@@ -78,8 +68,8 @@ export const ProductoForm: React.FC<ProductoFormProps> = ({
       nombre,
       precio: precioNum,
       descripcion: descripcion || undefined,
-      talle: talleNum,
-      color: color.trim(),
+      stock: stockNum,
+      disponibilidad,
       categoria_id: parseInt(categoria_id),
       ingredientes_ids: ingredientes_ids.length > 0 ? ingredientes_ids : undefined,
     })
@@ -108,7 +98,7 @@ export const ProductoForm: React.FC<ProductoFormProps> = ({
 
       <div className='grid grid-cols-2 gap-4'>
         <div>
-          <label className='block text-sm font-medium text-gray-700 mb-1'>Precio</label>
+          <label className='block text-sm font-medium text-gray-700 mb-1'>Precio ($)</label>
           <input
             type='number'
             step='0.01'
@@ -119,6 +109,19 @@ export const ProductoForm: React.FC<ProductoFormProps> = ({
           />
         </div>
 
+        <div>
+          <label className='block text-sm font-medium text-gray-700 mb-1'>Stock (Unidades)</label>
+          <input
+            type='number'
+            value={stock}
+            onChange={(e) => setStock(e.target.value)}
+            className='w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 text-gray-900'
+            placeholder='0'
+          />
+        </div>
+      </div>
+
+      <div className='grid grid-cols-2 gap-4'>
         <div>
           <label className='block text-sm font-medium text-gray-700 mb-1'>Categoría</label>
           <select
@@ -134,34 +137,17 @@ export const ProductoForm: React.FC<ProductoFormProps> = ({
             ))}
           </select>
         </div>
-      </div>
 
-      <div className='grid grid-cols-2 gap-4'>
-        <div>
-          <label className='block text-sm font-medium text-gray-700 mb-1'>Talle (1-5)</label>
-          <select
-            value={talle}
-            onChange={(e) => setTalle(e.target.value)}
-            className='w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 text-gray-900'
-          >
-            <option value=''>Selecciona un talle</option>
-            <option value='1'>1 (XS)</option>
-            <option value='2'>2 (S)</option>
-            <option value='3'>3 (M)</option>
-            <option value='4'>4 (L)</option>
-            <option value='5'>5 (XL)</option>
-          </select>
-        </div>
-
-        <div>
-          <label className='block text-sm font-medium text-gray-700 mb-1'>Color</label>
-          <input
-            type='text'
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
-            className='w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 text-gray-900'
-            placeholder='Color del producto'
-          />
+        <div className='flex items-end'>
+          <label className='flex items-center'>
+            <input
+              type='checkbox'
+              checked={disponibilidad}
+              onChange={(e) => setDisponibilidad(e.target.checked)}
+              className='w-4 h-4 border border-gray-300 rounded accent-orange-500'
+            />
+            <span className='ml-2 text-sm font-medium text-gray-700'>Disponible</span>
+          </label>
         </div>
       </div>
 

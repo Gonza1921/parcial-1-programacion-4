@@ -17,8 +17,8 @@ export interface Producto {
   nombre: string
   precio: number
   descripcion: string | null
-  talle: number
-  color: string
+  stock: number
+  disponibilidad: boolean
   categoria_id: number
   categoria: Categoria
   ingredientes: Ingrediente[]
@@ -48,8 +48,8 @@ export interface CreateProductoPayload {
   nombre: string
   precio: number
   descripcion?: string
-  talle: number
-  color: string
+  stock: number
+  disponibilidad: boolean
   categoria_id: number
   ingredientes_ids?: number[]
 }
@@ -58,8 +58,8 @@ export interface UpdateProductoPayload {
   nombre?: string
   precio?: number
   descripcion?: string
-  talle?: number
-  color?: string
+  stock?: number
+  disponibilidad?: boolean
   categoria_id?: number
   ingredientes_ids?: number[]
 }
