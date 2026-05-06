@@ -2,9 +2,9 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import SQLModel
+from typing import Any
 
 from app.database import engine
-from app.routers import categorias, ingredientes, productos
 from app.utils.exceptions import NotFoundException, ValidationException
 
 
@@ -55,7 +55,15 @@ async def health():
     return {'status': 'ok', 'message': 'API is running'}
 
 
+# Simple test endpoint
+@app.get('/test-productos', tags=['Test'], response_model=list[dict[str, Any]])
+async def test_productos():
+    from app.services.producto_service import get_all_productos
+    return get_all_productos(skip=0, limit=10)
+
+
 # Include routers
+from app.routers import categorias, ingredientes, productos
 app.include_router(categorias.router, prefix="/api")
 app.include_router(ingredientes.router, prefix="/api")
 app.include_router(productos.router, prefix="/api")
@@ -71,6 +79,7 @@ async def root():
             'ingredientes': '/api/ingredientes',
             'productos': '/api/productos',
             'health': '/health',
+            'test-productos': '/test-productos',
             'docs': '/docs',
         },
     }
