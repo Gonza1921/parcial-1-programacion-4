@@ -18,6 +18,9 @@ export const useProductoByIdQuery = (id: number) => {
   })
 }
 
+// Alias para mayor claridad en la página de detalle
+export const useProductoQuery = useProductoByIdQuery
+
 export const useProductoCreate = () => {
   const queryClient = useQueryClient()
   return useMutation({

@@ -1,4 +1,4 @@
-﻿from fastapi import APIRouter, HTTPException, status
+﻿from fastapi import APIRouter, HTTPException, status, Path
 from typing import Annotated
 from fastapi import Query
 
@@ -24,7 +24,7 @@ async def list_categorias(
 
 
 @router.get('/{id}', response_model=CategoriaRead)
-async def get_categoria(id: int):
+async def get_categoria(id: Annotated[int, Path(gt=0, description="ID de la categoría debe ser mayor a 0")]):
     try:
         return get_categoria_by_id(id)
     except NotFoundException as e:
@@ -43,7 +43,7 @@ async def create_categoria_endpoint(
 
 @router.put('/{id}', response_model=CategoriaRead)
 async def update_categoria_endpoint(
-    id: int,
+    id: Annotated[int, Path(gt=0, description="ID de la categoría debe ser mayor a 0")],
     categoria_in: CategoriaUpdate,
 ):
     try:
@@ -56,7 +56,7 @@ async def update_categoria_endpoint(
 
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_categoria_endpoint(
-    id: int,
+    id: Annotated[int, Path(gt=0, description="ID de la categoría debe ser mayor a 0")],
 ):
     try:
         delete_categoria(id)

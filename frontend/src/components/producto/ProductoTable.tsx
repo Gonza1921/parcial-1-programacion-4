@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button } from '../common'
 import type { Producto } from '../../types'
 
@@ -15,6 +16,8 @@ export const ProductoTable: React.FC<ProductoTableProps> = ({
   onDelete,
   isDeleting = false,
 }) => {
+  const navigate = useNavigate()
+
   return (
     <div className='bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden'>
       <table className='w-full'>
@@ -34,7 +37,9 @@ export const ProductoTable: React.FC<ProductoTableProps> = ({
           {productos.map((producto) => (
             <tr key={producto.id} className='hover:bg-orange-50 transition-colors'>
               <td className='px-6 py-4 text-sm text-gray-900'>{producto.id}</td>
-              <td className='px-6 py-4 text-sm font-medium text-gray-900'>{producto.nombre}</td>
+              <td className='px-6 py-4 text-sm font-medium text-blue-600 hover:text-blue-800 cursor-pointer' onClick={() => navigate(`/productos/${producto.id}`)}>
+                {producto.nombre}
+              </td>
               <td className='px-6 py-4 text-sm text-gray-900'>${producto.precio.toFixed(2)}</td>
               <td className='px-6 py-4 text-sm text-gray-900'>{producto.stock} u.</td>
               <td className='px-6 py-4 text-sm'>
@@ -53,6 +58,12 @@ export const ProductoTable: React.FC<ProductoTableProps> = ({
                   : '-'}
               </td>
               <td className='px-6 py-4 text-right space-x-2'>
+                <Button
+                  variant='primary'
+                  onClick={() => navigate(`/productos/${producto.id}`)}
+                >
+                  Ver
+                </Button>
                 <Button
                   variant='secondary'
                   onClick={() => onEdit(producto)}

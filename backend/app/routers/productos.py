@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Query
+from fastapi import APIRouter, HTTPException, status, Query, Path
 from typing import Annotated, Any
 
 from app.services.producto_service import (
@@ -16,10 +16,10 @@ router = APIRouter(prefix='/productos', tags=['productos'])
 
 @router.get('', response_model=list[dict[str, Any]])
 async def list_productos(
-    skip: Annotated[int, Query(ge=0)] = 0,
-    limit: Annotated[int, Query(gt=0, le=100)] = 10,
-    categoria_id: Annotated[int | None, Query()] = None,
-    ingrediente_id: Annotated[int | None, Query()] = None,
+    skip: Annotated[int, Query(ge=0, description="Cantidad de registros a saltar (paginación)")] = 0,
+    limit: Annotated[int, Query(gt=0, le=100, description="Máximo 100 registros por consulta")] = 10,
+    categoria_id: Annotated[int | None, Query(gt=0, description="Filtrar por categoría")] = None,
+    ingrediente_id: Annotated[int | None, Query(gt=0, description="Filtrar por ingrediente")] = None,
 ):
     return get_all_productos(
         skip=skip,
@@ -30,7 +30,7 @@ async def list_productos(
 
 
 @router.get('/{id}', response_model=dict[str, Any])
-async def get_producto(id: int):
+async def get_producto(id: Annotated[int, Path(gt=0, description="ID del producto debe ser mayor a 0")]):
     try:
         return get_producto_by_id(id)
     except NotFoundException as e:
@@ -51,7 +51,7 @@ async def create_producto_endpoint(
 
 @router.put('/{id}', response_model=dict[str, Any])
 async def update_producto_endpoint(
-    id: int,
+    id: Annotated[int, Path(gt=0, description="ID del producto debe ser mayor a 0")],
     producto_in: ProductoUpdate,
 ):
     try:
@@ -64,7 +64,7 @@ async def update_producto_endpoint(
 
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_producto_endpoint(
-    id: int,
+    id: Annotated[int, Path(gt=0, description="ID del producto debe ser mayor a 0")],
 ):
     try:
         delete_producto(id)

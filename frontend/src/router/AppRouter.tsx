@@ -3,6 +3,7 @@ import { Layout } from '../layout/Layout'
 import { CategoriasPage } from '../pages/CategoriasPage'
 import { IngredientesPage } from '../pages/IngredientesPage'
 import { ProductosPage } from '../pages/ProductosPage'
+import { ProductoDetailPage } from '../pages/ProductoDetailPage'
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
       { path: 'categorias', element: <CategoriasPage /> },
       { path: 'ingredientes', element: <IngredientesPage /> },
       { path: 'productos', element: <ProductosPage /> },
+      { path: 'productos/:id', element: <ProductoDetailPage /> },
     ],
   },
 ])

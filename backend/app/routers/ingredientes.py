@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Path
 from typing import Annotated
 from fastapi import Query
 
@@ -17,14 +17,14 @@ router = APIRouter(prefix='/ingredientes', tags=['ingredientes'])
 
 @router.get('', response_model=list[IngredienteRead])
 async def list_ingredientes(
-    skip: Annotated[int, Query(ge=0)] = 0,
-    limit: Annotated[int, Query(gt=0, le=100)] = 10,
+    skip: Annotated[int, Query(ge=0, description="Cantidad de registros a saltar (paginación)")] = 0,
+    limit: Annotated[int, Query(gt=0, le=100, description="Máximo 100 registros por consulta")] = 10,
 ):
     return get_all_ingredientes(skip, limit)
 
 
 @router.get('/{id}', response_model=IngredienteRead)
-async def get_ingrediente(id: int):
+async def get_ingrediente(id: Annotated[int, Path(gt=0, description="ID del ingrediente debe ser mayor a 0")]):
     try:
         return get_ingrediente_by_id(id)
     except NotFoundException as e:
@@ -43,7 +43,7 @@ async def create_ingrediente_endpoint(
 
 @router.put('/{id}', response_model=IngredienteRead)
 async def update_ingrediente_endpoint(
-    id: int,
+    id: Annotated[int, Path(gt=0, description="ID del ingrediente debe ser mayor a 0")],
     ingrediente_in: IngredienteUpdate,
 ):
     try:
@@ -56,7 +56,7 @@ async def update_ingrediente_endpoint(
 
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_ingrediente_endpoint(
-    id: int,
+    id: Annotated[int, Path(gt=0, description="ID del ingrediente debe ser mayor a 0")],
 ):
     try:
         delete_ingrediente(id)
