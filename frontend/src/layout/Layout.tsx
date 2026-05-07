@@ -4,10 +4,12 @@ import { Navbar } from './Navbar'
 
 export const Layout: React.FC = () => {
   return (
-    <div className='min-h-screen bg-gray-50'>
+    <div className='min-h-screen bg-gray-50 flex flex-col w-full'>
       <Navbar />
-      <main className='max-w-7xl mx-auto px-4 py-8 space-y-6'>
-        <Outlet />
+      <main className='flex-1 w-full px-6 py-8'>
+        <div className='space-y-6'>
+          <Outlet />
+        </div>
       </main>
     </div>
   )

@@ -7,8 +7,8 @@ export const Navbar: React.FC = () => {
   const isActive = (path: string) => location.pathname === path || (path === '/' && location.pathname === '/categorias')
 
   return (
-    <nav className='bg-slate-800 text-white shadow-md'>
-      <div className='max-w-7xl mx-auto px-4 py-4 flex justify-between items-center'>
+    <nav className='bg-slate-800 text-white shadow-md w-full'>
+      <div className='w-full px-6 py-4 flex justify-between items-center'>
         <h1 className='text-xl font-bold flex items-center gap-2'>
           🍽️ FOOD STORE
         </h1>
