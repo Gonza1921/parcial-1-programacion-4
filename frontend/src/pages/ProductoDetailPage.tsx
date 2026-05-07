@@ -2,8 +2,6 @@ import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useProductoQuery } from '../hooks/useProducto'
 import { Button, Alert, LoadingSpinner } from '../components/common'
-import { ArrowLeft } from 'lucide-react'
-import type { Producto } from '../types'
 
 export const ProductoDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -17,7 +15,7 @@ export const ProductoDetailPage: React.FC = () => {
       <div className="space-y-4">
         <Alert type="error" message="ID de producto inválido" />
         <Button onClick={() => navigate('/productos')}>
-          <ArrowLeft className="w-4 h-4" /> Volver a Productos
+          ← Volver a Productos
         </Button>
       </div>
     )
@@ -32,7 +30,7 @@ export const ProductoDetailPage: React.FC = () => {
       <div className="space-y-4">
         <Alert type="error" message={`Error al cargar el producto: ${String(error)}`} />
         <Button onClick={() => navigate('/productos')}>
-          <ArrowLeft className="w-4 h-4" /> Volver a Productos
+          ← Volver a Productos
         </Button>
       </div>
     )
@@ -43,7 +41,7 @@ export const ProductoDetailPage: React.FC = () => {
       <div className="space-y-4">
         <Alert type="error" message="Producto no encontrado" />
         <Button onClick={() => navigate('/productos')}>
-          <ArrowLeft className="w-4 h-4" /> Volver a Productos
+          ← Volver a Productos
         </Button>
       </div>
     )
@@ -53,7 +51,7 @@ export const ProductoDetailPage: React.FC = () => {
     <div className="space-y-6">
       <div className="flex items-center gap-4">
         <Button onClick={() => navigate('/productos')} className="!p-2">
-          <ArrowLeft className="w-5 h-5" />
+          ← Volver
         </Button>
         <h1 className="text-3xl font-bold text-gray-900">{producto.nombre}</h1>
       </div>
@@ -124,7 +122,7 @@ export const ProductoDetailPage: React.FC = () => {
 
       <div className="flex gap-3">
         <Button onClick={() => navigate('/productos')} className="bg-gray-500 hover:bg-gray-600">
-          <ArrowLeft className="w-4 h-4" /> Volver
+          ← Volver
         </Button>
         <Button onClick={() => navigate(`/productos/${productoId}/editar`)} className="bg-blue-600 hover:bg-blue-700">
           Editar
